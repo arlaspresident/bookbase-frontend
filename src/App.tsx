@@ -1,13 +1,20 @@
 import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import BookDetails from "./pages/BookDetails";
+import "./App.css";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/bok/:id" element={<BookDetails />} />
-    </Routes>
+    <>
+      <Navbar />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/bok/:id" element={<BookDetails />} />
+        </Routes>
+      </main>
+    </>
   );
 }
 
