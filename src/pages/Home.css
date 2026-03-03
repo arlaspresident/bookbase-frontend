@@ -1,0 +1,90 @@
+.home-heading {
+  font-size: 1.8rem;
+  margin-bottom: var(--mellanrum-l);
+}
+
+/*sökformulär*/
+.search-form {
+  display: flex;
+  gap: var(--mellanrum-s);
+  margin-bottom: var(--mellanrum-l);
+}
+
+.search-form input {
+  flex: 1;
+}
+
+.search-form button {
+  white-space: nowrap;
+}
+
+.empty-text {
+  color: var(--färg-text-svag);
+  margin-top: var(--mellanrum-m);
+}
+
+/*grid*/
+.book-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--mellanrum-m);
+  margin-top: var(--mellanrum-m);
+}
+
+/*kort*/
+.book-card {
+  background-color: var(--färg-yta);
+  border: 1px solid var(--färg-kant);
+  border-radius: var(--radie);
+  padding: var(--mellanrum-m);
+  display: flex;
+  gap: var(--mellanrum-m);
+  box-shadow: var(--skugga);
+  transition: box-shadow 0.2s;
+}
+
+.book-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.book-cover {
+  width: 80px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.book-cover-placeholder {
+  width: 80px;
+  height: 110px;
+  background-color: var(--färg-bakgrund);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mellanrum-s);
+}
+
+.book-title {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.book-author {
+  color: var(--färg-text-svag);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/*quieries*/
+@media (max-width: 600px) {
+  .book-grid {
+    grid-template-columns: 1fr;
+  }
+}

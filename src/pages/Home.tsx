@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { sökBöcker } from "../api/googleBooks";
 import type { GoogleBooksVolume } from "../types/googleBooks";
+import "./Home.css";
 
 const Home = () => {
   const [sökterm, setSökterm] = useState("");
@@ -9,9 +10,8 @@ const Home = () => {
   const [laddar, setLaddar] = useState(false);
   const [fel, setFel] = useState<string | null>(null);
 
-  const hanteraSök = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  /*hanterar sökning*/
+  const hanteraSök = async () => {
     try {
       setFel(null);
       setLaddar(true);
@@ -26,36 +26,34 @@ const Home = () => {
   };
 
   return (
-    <div style={{ padding: 16, maxWidth: 900, margin: "0 auto" }}>
-      <h1>BookBase</h1>
+    <div>
+      <h1 className="home-heading">Hitta din nästa bok</h1>
 
-      <form onSubmit={hanteraSök} style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-        <label style={{ display: "none" }} htmlFor="sökterm">
+      <form onSubmit={(e) => { e.preventDefault(); void hanteraSök(); }} className="search-form">
+        <label className="visually-hidden" htmlFor="sökterm">
           Sök efter böcker
         </label>
-
         <input
           id="sökterm"
           type="text"
           value={sökterm}
           onChange={(e) => setSökterm(e.target.value)}
           placeholder="Sök på titel, författare, ämne..."
-          style={{ flex: 1, padding: 10 }}
         />
-
-        <button type="submit" disabled={laddar || sökterm.trim().length === 0} style={{ padding: "10px 14px" }}>
+        <button type="submit" disabled={laddar || sökterm.trim().length === 0}>
           Sök
         </button>
       </form>
 
-      {laddar && <p>Laddar...</p>}
-      {fel && <p style={{ color: "crimson" }}>{fel}</p>}
-
+      {/*statusmeddelanden*/}
+      {laddar && <p className="loading-text">Laddar...</p>}
+      {fel && <p className="error-message">{fel}</p>}
       {!laddar && !fel && böcker.length === 0 && (
-        <p>Skriv något i sökfältet och tryck på sök</p>
+        <p className="empty-text">Skriv något i sökfältet och tryck på sök.</p>
       )}
 
-      <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}>
+      {/*sökresultat*/}
+      <ul className="book-grid">
         {böcker.map((bok) => {
           const info = bok.volumeInfo;
           const titel = info.title ?? "Okänd titel";
@@ -63,29 +61,21 @@ const Home = () => {
           const bild = info.imageLinks?.thumbnail ?? info.imageLinks?.smallThumbnail;
 
           return (
-            <li key={bok.id} style={{ border: "1px solid #ddd", borderRadius: 8, padding: 12 }}>
-              <div style={{ display: "flex", gap: 12 }}>
-                {bild ? (
-                  <img
-                    src={bild}
-                    alt={`Omslag: ${titel}`}
-                    style={{ width: 80, height: "auto", objectFit: "cover" }}
-                  />
-                ) : (
-                  <div
-                    aria-hidden="true"
-                    style={{ width: 80, height: 120, background: "#f2f2f2", borderRadius: 6 }}
-                  />
-                )}
+            <li key={bok.id} className="book-card">
+              {bild ? (
+                <img
+                  src={bild}
+                  alt={`Omslag: ${titel}`}
+                  className="book-cover"
+                />
+              ) : (
+                <div aria-hidden="true" className="book-cover-placeholder" />
+              )}
 
-                <div style={{ flex: 1 }}>
-                  <h2 style={{ margin: "0 0 6px 0", fontSize: 18 }}>{titel}</h2>
-                  <p style={{ margin: 0 }}>{författare}</p>
-
-                  <div style={{ marginTop: 10 }}>
-                    <Link to={`/bok/${bok.id}`}>Visa detaljer</Link>
-                  </div>
-                </div>
+              <div className="book-info">
+                <h2 className="book-title">{titel}</h2>
+                <p className="book-author">{författare}</p>
+                <Link to={`/bok/${bok.id}`}>Visa detaljer</Link>
               </div>
             </li>
           );
