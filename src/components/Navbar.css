@@ -48,6 +48,26 @@
   text-decoration: none;
 }
 
+.navbar-user {
+  font-size: 0.9rem;
+  color: var(--färg-text-svag);
+}
+
+.navbar-logout {
+  background: none;
+  color: var(--färg-text-svag);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar-logout:hover {
+  color: var(--färg-fel);
+  background: none;
+}
+
 /*quieries*/
 @media (max-width: 600px) {
   .navbar-logo {
