@@ -1,11 +1,17 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+import { API_URL } from "../api/config";
 
 /*typer*/
 interface Användare {
   id: number;
   namn: string;
   epost: string;
+}
+
+interface AuthSvar {
+  token: string;
+  användare: Användare;
 }
 
 interface AuthContextTyp {
@@ -35,9 +41,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  /*kopplas t backend*/
-  const loggaIn = async (_epost: string, _lösenord: string) => {};
-  const registrera = async (_namn: string, _epost: string, _lösenord: string) => {};
+  /*sparar token och användare i state och localstorage*/
+  const sparaSession = (data: AuthSvar) => {
+    setToken(data.token);
+    setAnvändare(data.användare);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("användare", JSON.stringify(data.användare));
+  };
+
+  const loggaIn = async (epost: string, lösenord: string) => {
+    const svar = await fetch(`${API_URL}/api/auth/logga-in`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ epost, lösenord }),
+    });
+
+    if (!svar.ok) {
+      const fel = await svar.json().catch(() => ({}));
+      throw new Error((fel as { meddelande?: string }).meddelande ?? "Inloggning misslyckades.");
+    }
+
+    sparaSession((await svar.json()) as AuthSvar);
+  };
+
+  const registrera = async (namn: string, epost: string, lösenord: string) => {
+    const svar = await fetch(`${API_URL}/api/auth/registrera`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ namn, epost, lösenord }),
+    });
+
+    if (!svar.ok) {
+      const fel = await svar.json().catch(() => ({}));
+      throw new Error((fel as { meddelande?: string }).meddelande ?? "Registrering misslyckades.");
+    }
+
+    sparaSession((await svar.json()) as AuthSvar);
+  };
 
   /*rensar state och localstorage*/
   const loggaUt = () => {
