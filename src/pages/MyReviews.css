@@ -1,0 +1,84 @@
+.my-reviews-heading {
+  margin-bottom: var(--mellanrum-l);
+}
+
+.my-reviews-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mellanrum-m);
+}
+
+.my-review-card {
+  background-color: var(--färg-yta);
+  border: 1px solid var(--färg-kant);
+  border-radius: var(--radie);
+  padding: var(--mellanrum-m);
+  box-shadow: var(--skugga);
+}
+
+.my-review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--mellanrum-s);
+}
+
+.my-review-book-title {
+  font-size: 1.1rem;
+}
+
+.my-review-date {
+  font-size: 0.85rem;
+  color: var(--färg-text-svag);
+}
+
+.my-review-rating {
+  font-weight: 500;
+  margin-bottom: var(--mellanrum-s);
+}
+
+.my-review-text {
+  color: var(--färg-text);
+  line-height: 1.6;
+  margin-bottom: var(--mellanrum-m);
+}
+
+.my-review-actions {
+  display: flex;
+  gap: var(--mellanrum-s);
+}
+
+.my-review-edit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mellanrum-s);
+}
+
+.my-review-select {
+  width: fit-content;
+  padding: 6px 10px;
+  border: 1px solid var(--färg-kant);
+  border-radius: var(--radie);
+  font-size: 0.95rem;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--färg-text-svag);
+  border: 1px solid var(--färg-kant);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--färg-bakgrund);
+}
+
+.btn-danger {
+  background-color: transparent;
+  color: var(--färg-fel);
+  border: 1px solid var(--färg-fel);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--färg-fel-bakgrund);
+}

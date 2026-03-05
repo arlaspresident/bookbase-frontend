@@ -5,6 +5,7 @@ import BookDetails from "./pages/BookDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyReviews from "./pages/MyReviews";
 import "./App.css";
 
 function App() {
@@ -21,8 +22,7 @@ function App() {
             path="/mina-recensioner"
             element={
               <ProtectedRoute>
-                {/* MinaRecensioner läggs till här */}
-                <div>Mina recensioner</div>
+                <MyReviews />
               </ProtectedRoute>
             }
           />
