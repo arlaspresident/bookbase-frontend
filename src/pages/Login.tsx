@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Login.css";
 
 const Login = () => {
-  const { loggaIn } = useAuth();
+  const { loggaIn, inloggad } = useAuth();
   const navigate = useNavigate();
+
+  if (inloggad) return <Navigate to="/" replace />;
 
   const [epost, setEpost] = useState("");
   const [lösenord, setLösenord] = useState("");
