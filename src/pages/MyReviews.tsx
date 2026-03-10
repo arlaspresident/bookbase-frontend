@@ -14,6 +14,9 @@ const MyReviews = () => {
   const [redigeraText, setRedigeraText] = useState("");
   const [redigeraBetyg, setRedigeraBetyg] = useState(5);
 
+  /*id för recensionen som håller på o tas bort (bekräftelse)*/
+  const [bekräftar, setBekräftar] = useState<number | null>(null);
+
   useEffect(() => {
     const hämta = async () => {
       try {
@@ -49,6 +52,7 @@ const MyReviews = () => {
     try {
       await taBortRecension(id);
       setRecensioner((prev) => prev.filter((r) => r.id !== id));
+      setBekräftar(null);
     } catch (err) {
       setFel(err instanceof Error ? err.message : "Kunde inte ta bort.");
     }
@@ -69,48 +73,72 @@ const MyReviews = () => {
       <ul className="my-reviews-list">
         {recensioner.map((r) => (
           <li key={r.id} className="my-review-card">
-            <div className="my-review-header">
-              <h2 className="my-review-book-title">
-                <Link to={`/bok/${r.bokId}`}>{r.bokTitel}</Link>
-              </h2>
-              <span className="my-review-date">
-                {new Date(r.skapadDatum).toLocaleDateString("sv-SE")}
-              </span>
-            </div>
-
-            {redigerar === r.id ? (
-              /*redigeringsläge*/
-              <div className="my-review-edit">
-                <select
-                  value={redigeraBetyg}
-                  onChange={(e) => setRedigeraBetyg(Number(e.target.value))}
-                  className="my-review-select"
-                >
-                  {[1, 2, 3, 4, 5].map((b) => (
-                    <option key={b} value={b}>{b} / 5</option>
-                  ))}
-                </select>
-                <textarea
-                  value={redigeraText}
-                  onChange={(e) => setRedigeraText(e.target.value)}
-                  rows={4}
+            <div className="my-review-layout">
+              <Link to={`/bok/${r.bokId}`} className="my-review-cover-link">
+                <img
+                  src={`https://books.google.com/books/content?id=${r.bokId}&printsec=frontcover&img=1&zoom=1`}
+                  alt={r.bokTitel}
+                  className="my-review-cover"
                 />
-                <div className="my-review-actions">
-                  <button onClick={() => void sparaRedigering(r.id)}>Spara</button>
-                  <button className="btn-secondary" onClick={() => setRedigerar(null)}>Avbryt</button>
+              </Link>
+
+              <div className="my-review-content">
+                <div className="my-review-header">
+                  <h2 className="my-review-book-title">
+                    <Link to={`/bok/${r.bokId}`}>{r.bokTitel}</Link>
+                  </h2>
+                  <span className="my-review-date">
+                    {new Date(r.skapadDatum).toLocaleDateString("sv-SE")}
+                  </span>
                 </div>
+
+                {redigerar === r.id ? (
+                  /*redigeringsläge*/
+                  <div className="my-review-edit">
+                    <select
+                      value={redigeraBetyg}
+                      onChange={(e) => setRedigeraBetyg(Number(e.target.value))}
+                      className="my-review-select"
+                      aria-label="Betyg"
+                    >
+                      {[1, 2, 3, 4, 5].map((b) => (
+                        <option key={b} value={b}>{b} / 5</option>
+                      ))}
+                    </select>
+                    <textarea
+                      value={redigeraText}
+                      onChange={(e) => setRedigeraText(e.target.value)}
+                      rows={4}
+                      aria-label="Recensionstext"
+                    />
+                    <div className="my-review-actions">
+                      <button type="button" onClick={() => void sparaRedigering(r.id)}>Spara</button>
+                      <button type="button" className="btn-secondary" onClick={() => setRedigerar(null)}>Avbryt</button>
+                    </div>
+                  </div>
+                ) : (
+                  /*visningsläge*/
+                  <div>
+                    <p className="my-review-rating">Betyg: {r.betyg} / 5</p>
+                    <p className="my-review-text">{r.text}</p>
+
+                    {bekräftar === r.id ? (
+                      /*bekräftelse innan radering*/
+                      <div className="my-review-confirm">
+                        <span>Är du säker?</span>
+                        <button type="button" className="btn-danger" onClick={() => void taBort(r.id)}>Ja, ta bort</button>
+                        <button type="button" className="btn-secondary" onClick={() => setBekräftar(null)}>Avbryt</button>
+                      </div>
+                    ) : (
+                      <div className="my-review-actions">
+                        <button type="button" onClick={() => startaRedigering(r)}>Redigera</button>
+                        <button type="button" className="btn-danger" onClick={() => setBekräftar(r.id)}>Ta bort</button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-            ) : (
-              /*visningsläge*/
-              <div>
-                <p className="my-review-rating">Betyg: {r.betyg} / 5</p>
-                <p className="my-review-text">{r.text}</p>
-                <div className="my-review-actions">
-                  <button onClick={() => startaRedigering(r)}>Redigera</button>
-                  <button className="btn-danger" onClick={() => void taBort(r.id)}>Ta bort</button>
-                </div>
-              </div>
-            )}
+            </div>
           </li>
         ))}
       </ul>

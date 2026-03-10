@@ -17,6 +17,35 @@
   box-shadow: var(--skugga);
 }
 
+.my-review-layout {
+  display: flex;
+  gap: var(--mellanrum-m);
+}
+
+.my-review-cover-link {
+  flex-shrink: 0;
+}
+
+.my-review-cover {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.my-review-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.my-review-confirm {
+  display: flex;
+  align-items: center;
+  gap: var(--mellanrum-s);
+  flex-wrap: wrap;
+}
+
 .my-review-header {
   display: flex;
   justify-content: space-between;
