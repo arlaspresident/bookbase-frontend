@@ -111,3 +111,15 @@
 .btn-danger:hover:not(:disabled) {
   background-color: var(--färg-fel-bakgrund);
 }
+
+/*responsivitet*/
+@media (max-width: 600px) {
+  .my-review-layout {
+    flex-direction: column;
+  }
+
+  .my-review-cover {
+    width: 100px;
+    height: 150px;
+  }
+}

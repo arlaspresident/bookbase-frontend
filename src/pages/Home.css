@@ -101,9 +101,23 @@
   margin: 0;
 }
 
-/*quieries*/
+/*responsivitet*/
 @media (max-width: 600px) {
   .book-grid {
     grid-template-columns: 1fr;
+  }
+
+  .search-form > button {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .search-filters {
+    width: 100%;
+  }
+
+  .search-filters select {
+    flex: 1;
+    min-width: 140px;
   }
 }

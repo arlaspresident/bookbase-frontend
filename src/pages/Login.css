@@ -47,3 +47,14 @@
   font-size: 0.9rem;
   color: var(--färg-text-svag);
 }
+
+/*responsivitet*/
+@media (max-width: 600px) {
+  .auth-wrapper {
+    padding-top: var(--mellanrum-l);
+  }
+
+  .auth-card {
+    padding: var(--mellanrum-l) var(--mellanrum-m);
+  }
+}

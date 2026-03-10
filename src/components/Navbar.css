@@ -70,7 +70,25 @@
 
 /*quieries*/
 @media (max-width: 600px) {
+  .navbar-content {
+    height: auto;
+    flex-wrap: wrap;
+    padding: var(--mellanrum-s) var(--mellanrum-m);
+    gap: var(--mellanrum-s);
+  }
+
   .navbar-logo {
     font-size: 1.2rem;
+  }
+
+  .navbar-links {
+    width: 100%;
+    gap: var(--mellanrum-m);
+    padding-bottom: var(--mellanrum-s);
+    flex-wrap: wrap;
+  }
+
+  .navbar-user {
+    font-size: 0.85rem;
   }
 }
