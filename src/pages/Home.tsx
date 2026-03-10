@@ -6,16 +6,19 @@ import "./Home.css";
 
 const Home = () => {
   const [sökterm, setSökterm] = useState("");
+  const [språk, setSpråk] = useState("");
+  const [ämne, setÄmne] = useState("");
   const [böcker, setBöcker] = useState<GoogleBooksVolume[]>([]);
   const [laddar, setLaddar] = useState(false);
   const [fel, setFel] = useState<string | null>(null);
 
-  /*hanterar sökning*/
+  /*hanterar sökning med valfria filter*/
   const hanteraSök = async () => {
     try {
       setFel(null);
       setLaddar(true);
-      const resultat = await sökBöcker(sökterm);
+      const filter = { språk: språk || undefined, ämne: ämne || undefined };
+      const resultat = await sökBöcker(sökterm, filter);
       setBöcker(resultat);
     } catch (err) {
       setFel(err instanceof Error ? err.message : "Ett okänt fel inträffade.");
@@ -40,6 +43,38 @@ const Home = () => {
           onChange={(e) => setSökterm(e.target.value)}
           placeholder="Sök på titel, författare, ämne..."
         />
+
+        <div className="search-filters">
+          <select
+            value={ämne}
+            onChange={(e) => setÄmne(e.target.value)}
+            aria-label="Genre"
+          >
+            <option value="">Alla genrer</option>
+            <option value="fiction">Skönlitteratur</option>
+            <option value="nonfiction">Facklitteratur</option>
+            <option value="science+fiction">Science fiction</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="mystery">Deckare</option>
+            <option value="biography">Biografi</option>
+            <option value="history">Historia</option>
+            <option value="children">Barnböcker</option>
+          </select>
+
+          <select
+            value={språk}
+            onChange={(e) => setSpråk(e.target.value)}
+            aria-label="Språk"
+          >
+            <option value="">Alla språk</option>
+            <option value="sv">Svenska</option>
+            <option value="en">Engelska</option>
+            <option value="de">Tyska</option>
+            <option value="fr">Franska</option>
+            <option value="es">Spanska</option>
+          </select>
+        </div>
+
         <button type="submit" disabled={laddar || sökterm.trim().length === 0}>
           Sök
         </button>

@@ -1,10 +1,25 @@
 import type { GoogleBooksSearchResponse, GoogleBooksVolume } from "../types/googleBooks";
 
-export async function sökBöcker(query: string): Promise<GoogleBooksVolume[]> {
+interface SökFilter {
+  språk?: string;
+  ämne?: string;  
+}
+
+export async function sökBöcker(query: string, filter?: SökFilter): Promise<GoogleBooksVolume[]> {
   const q = query.trim();
   if (!q) return [];
 
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&maxResults=20`;
+  /*lägg till ämnesfilter direkt i söksträngen om de är valt*/
+  const sökSträng = filter?.ämne ? `${q}+subject:${filter.ämne}` : q;
+
+  const params = new URLSearchParams({
+    q: sökSträng,
+    maxResults: "20",
+  });
+
+  if (filter?.språk) params.set("langRestrict", filter.språk);
+
+  const url = `https://www.googleapis.com/books/v1/volumes?${params.toString()}`;
 
   const res = await fetch(url);
   if (!res.ok) {

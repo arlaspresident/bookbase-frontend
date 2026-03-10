@@ -6,16 +6,35 @@
 /*sökformulär*/
 .search-form {
   display: flex;
+  flex-direction: column;
   gap: var(--mellanrum-s);
   margin-bottom: var(--mellanrum-l);
 }
 
-.search-form input {
+.search-form > input {
   flex: 1;
 }
 
-.search-form button {
+.search-form > button {
   white-space: nowrap;
+  align-self: flex-start;
+}
+
+/*filter-rad med genre och språk*/
+.search-filters {
+  display: flex;
+  gap: var(--mellanrum-s);
+  flex-wrap: wrap;
+}
+
+.search-filters select {
+  padding: 8px 12px;
+  border: 1px solid var(--färg-kant);
+  border-radius: var(--radie);
+  font-size: 0.95rem;
+  background-color: var(--färg-yta);
+  color: var(--färg-text);
+  cursor: pointer;
 }
 
 .empty-text {
