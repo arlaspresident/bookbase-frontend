@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { hämtaMinaRecensioner, taBortRecension, uppdateraRecension } from "../api/reviews";
 import type { Recension } from "../api/reviews";
 import "./MyReviews.css";
@@ -69,7 +70,9 @@ const MyReviews = () => {
         {recensioner.map((r) => (
           <li key={r.id} className="my-review-card">
             <div className="my-review-header">
-              <h2 className="my-review-book-title">{r.bokTitel}</h2>
+              <h2 className="my-review-book-title">
+                <Link to={`/bok/${r.bokId}`}>{r.bokTitel}</Link>
+              </h2>
               <span className="my-review-date">
                 {new Date(r.skapadDatum).toLocaleDateString("sv-SE")}
               </span>
