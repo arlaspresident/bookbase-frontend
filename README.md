@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+# BookBase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+En bokrecensionsplattform där användare kan söka efter böcker, läsa recensioner och skriva egna
 
-Currently, two official plugins are available:
+## Tekniker
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19 + TypeScript
+- Vite
+- React Router v6
+- CSS med CSS variabler 
+- Google Books API
+- JWT autentisering mot Express.js backend
 
-## React Compiler
+## Funktioner
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Sök efter böcker via Google Books API med filter för genre och språk
+- Visa bokdetaljer (titel, författare, beskrivning, omslagsbild)
+- Registrera konto och logga in
+- Skriv, redigera och ta bort egna recensioner
+- Sida för mina recensioner med omslagsbilder och direktlänkar till böcker
+- Responsiv design för mobil och desktop
 
-## Expanding the ESLint configuration
+## Kom igång
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Projektet kräver att backend-servern körs lokalt på port 3001.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1. Klona och installera
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/arlaspresident/bookbase-frontend.git
+cd bookbase-frontend
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Starta backend
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Se backend repots README för instruktioner. Backend ska köra på `http://localhost:3001`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. Starta frontend
+
+```bash
+npm run dev
 ```
+
+Öppna [http://localhost:5173](http://localhost:5173) i webbläsaren.
+
+
